@@ -25,7 +25,7 @@ public class BoxDto extends BaseDTO implements Serializable {
 
     private String shipRule;
 
-    private String describe;
+    private String boxDescribe;
 
     private Integer boxSort;
 

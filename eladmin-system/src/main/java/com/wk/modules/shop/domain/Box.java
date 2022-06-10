@@ -43,14 +43,15 @@ public class Box extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "运货规则")
     private String shipRule;
 
+    @Column(name = "box_describe")
     @ApiModelProperty(value = "盲盒描述")
-    private String describe;
+    private String boxDescribe;
 
     @ApiModelProperty(value = "排序")
     private Integer boxSort;
 
     @Column(name = "del_flag",columnDefinition = "bit(1) default 1")
     @ApiModelProperty(value = "是否隐藏")
-    private Boolean delFlag;
+    private Boolean delFlag = true;
 
 }

@@ -14,4 +14,7 @@ public class BoxQueryCriteria {
 
     @Query(type = Query.Type.BETWEEN)
     private List<Timestamp> createTime;
+
+    @Query
+    private Boolean delFlag = true;
 }
