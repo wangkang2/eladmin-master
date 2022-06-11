@@ -34,8 +34,8 @@ public class BoxController {
 
     @ApiOperation("导出盲盒数据")
     @GetMapping(value = "/download")
-    @PreAuthorize("@el.check('job:list')")
-    public void exportJob(HttpServletResponse response, JobQueryCriteria criteria) throws IOException {
+    @PreAuthorize("@el.check('box:list')")
+    public void exportBox(HttpServletResponse response, BoxQueryCriteria criteria) throws IOException {
         boxService.download(boxService.queryAll(criteria), response);
     }
 
@@ -50,7 +50,7 @@ public class BoxController {
     @ApiOperation("新增盲盒")
     @PostMapping
     @PreAuthorize("@el.check('box:add')")
-    public ResponseEntity<Object> createJob(@Validated @RequestBody Box resources){
+    public ResponseEntity<Object> createBox(@Validated @RequestBody Box resources){
         if (resources.getId() != null) {
             throw new BadRequestException("A new "+ ENTITY_NAME +" cannot already have an ID");
         }
@@ -62,7 +62,7 @@ public class BoxController {
     @ApiOperation("修改盲盒")
     @PutMapping
     @PreAuthorize("@el.check('box:edit')")
-    public ResponseEntity<Object> updateJob(@Validated(BaseEntity.Update.class) @RequestBody Box resources){
+    public ResponseEntity<Object> updateBox(@Validated(BaseEntity.Update.class) @RequestBody Box resources){
         boxService.update(resources);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -71,7 +71,7 @@ public class BoxController {
     @ApiOperation("删除盲盒")
     @DeleteMapping
     @PreAuthorize("@el.check('box:del')")
-    public ResponseEntity<Object> deleteJob(@RequestBody Set<Long> ids){
+    public ResponseEntity<Object> deleteBox(@RequestBody Set<Long> ids){
         boxService.delete(ids);
         return new ResponseEntity<>(HttpStatus.OK);
     }

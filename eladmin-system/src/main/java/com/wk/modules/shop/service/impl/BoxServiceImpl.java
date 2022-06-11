@@ -7,8 +7,6 @@ import com.wk.modules.shop.service.BoxService;
 import com.wk.modules.shop.service.dto.BoxDto;
 import com.wk.modules.shop.service.dto.BoxQueryCriteria;
 import com.wk.modules.shop.service.mapstruct.BoxMapper;
-import com.wk.modules.system.service.dto.JobDto;
-import com.wk.modules.system.service.dto.JobQueryCriteria;
 import com.wk.utils.FileUtil;
 import com.wk.utils.PageUtil;
 import com.wk.utils.QueryHelp;
@@ -34,7 +32,7 @@ public class BoxServiceImpl implements BoxService {
     private final BoxMapper boxMapper;
 
     @Override
-    public List<BoxDto> queryAll(JobQueryCriteria criteria) {
+    public List<BoxDto> queryAll(BoxQueryCriteria criteria) {
         List<Box> list = boxRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder));
         return boxMapper.toDto(list);
     }
@@ -63,7 +61,7 @@ public class BoxServiceImpl implements BoxService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void create(Box resources) {
-        Box box = boxRepository.findByName(resources.getName());
+        Box box = boxRepository.findByNameAndDelFlag(resources.getName(),true);
         if(box != null){
             throw new EntityExistException(Box.class,"name",resources.getName());
         }
@@ -74,7 +72,7 @@ public class BoxServiceImpl implements BoxService {
     @Transactional(rollbackFor = Exception.class)
     public void update(Box resources) {
         Box box = boxRepository.findById(resources.getId()).orElseGet(Box::new);
-        Box old = boxRepository.findByName(resources.getName());
+        Box old = boxRepository.findByNameAndDelFlag(resources.getName(),true);
         if(old != null && !old.getId().equals(resources.getId())){
             throw new EntityExistException(Box.class,"name",resources.getName());
         }
@@ -84,6 +82,7 @@ public class BoxServiceImpl implements BoxService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Set<Long> ids) {
         for(Long id:ids){
             Box box = boxRepository.findById(id).orElseGet(Box::new);
