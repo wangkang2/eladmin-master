@@ -6,6 +6,7 @@ package com.wk.modules.shop.service.dto;
  */
 
 import com.wk.base.BaseDTO;
+import com.wk.modules.shop.domain.Box;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -69,15 +70,13 @@ public class SaleDto extends BaseDTO implements Serializable {
 
     private String redEnvelopePicPath3;
 
-    private Integer boxId3;
-
-    private String boxName3;
+    private List<Long> boxs;
 
     private String isLoop;
 
     private String loopType;
 
-    private String loopValue;
+    private List<String> loopValue;
 
     private Integer loopPartakeNum;
 

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: WANGKANG
@@ -21,4 +22,14 @@ public interface SaleService {
     Object queryAll(SaleQueryCriteria criteria, Pageable pageable);
 
     void download(List<SaleDto> queryAll, HttpServletResponse response) throws IOException;
+
+    void create(SaleDto resources);
+
+    List<Long> getBoxBySaleId(Long saleId);
+
+    List<String> getLoopValueBySaleId(Long saleId);
+
+    void update(SaleDto resources);
+
+    void delete(Set<Long> ids);
 }

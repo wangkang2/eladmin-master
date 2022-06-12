@@ -5,7 +5,6 @@ package com.wk.modules.shop.domain;/**
  */
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wk.base.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -15,7 +14,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -120,13 +118,13 @@ public class Sale extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "红包3图片真实路径")
     private String redEnvelopePicPath3;
 
-    @Column(name = "box_id3")
-    @ApiModelProperty(value = "盲盒ID3")
-    private Integer boxId3;
-
-    @Column(name = "box_name3")
-    @ApiModelProperty(value = "盲盒名称3")
-    private String boxName3;
+//    @Column(name = "box_id3")
+//    @ApiModelProperty(value = "盲盒ID3")
+//    private Integer boxId3;
+//
+//    @Column(name = "box_name3")
+//    @ApiModelProperty(value = "盲盒名称3")
+//    private String boxName3;
 
     @Column(name = "is_loop")
     @ApiModelProperty(value = "是否循环 0否 1是")
@@ -136,9 +134,9 @@ public class Sale extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "循环类型 1按周 2按月")
     private String loopType;
 
-    @Column(name = "loop_value")
-    @ApiModelProperty(value = "循环值")
-    private String loopValue;
+//    @Column(name = "loop_value")
+//    @ApiModelProperty(value = "循环值")
+//    private String loopValue;
 
     @Column(name = "loop_partake_num")
     @ApiModelProperty(value = "循环参与次数")

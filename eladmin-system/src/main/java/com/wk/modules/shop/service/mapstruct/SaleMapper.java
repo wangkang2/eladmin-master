@@ -6,6 +6,9 @@ import com.wk.modules.shop.service.dto.SaleDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Author: WANGKANG
  * @Date: 2022/6/11 18:52
