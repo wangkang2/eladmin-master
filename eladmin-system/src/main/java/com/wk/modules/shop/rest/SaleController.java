@@ -65,6 +65,11 @@ public class SaleController {
         return new ResponseEntity<>(saleService.getLoopValueBySaleId(saleId), HttpStatus.OK);
     }
 
+    @GetMapping("getSaleContentBySaleId")
+    public ResponseEntity<String> getSaleContentBySaleId(Long saleId){
+        return new ResponseEntity<>(saleService.getSaleContentBySaleId(saleId), HttpStatus.OK);
+    }
+
     @Log("新增活动")
     @ApiOperation("新增活动")
     @PostMapping

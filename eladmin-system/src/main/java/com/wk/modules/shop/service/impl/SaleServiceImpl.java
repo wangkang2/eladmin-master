@@ -6,11 +6,9 @@ package com.wk.modules.shop.service.impl;/**
 
 
 import com.wk.exception.EntityExistException;
-import com.wk.modules.shop.domain.Coupon;
-import com.wk.modules.shop.domain.Sale;
-import com.wk.modules.shop.domain.SaleBox;
-import com.wk.modules.shop.domain.SaleLoop;
+import com.wk.modules.shop.domain.*;
 import com.wk.modules.shop.repository.SaleBoxRepository;
+import com.wk.modules.shop.repository.SaleContentRepository;
 import com.wk.modules.shop.repository.SaleLoopRepository;
 import com.wk.modules.shop.repository.SaleRepository;
 import com.wk.modules.shop.service.SaleService;
@@ -49,6 +47,7 @@ public class SaleServiceImpl implements SaleService {
     private final SaleRepository saleRepository;
     private final SaleBoxRepository saleBoxRepository;
     private final SaleLoopRepository saleLoopRepository;
+    private final SaleContentRepository saleContentRepository;
     private final SaleMapper saleMapper;
 
     @Override
@@ -110,21 +109,34 @@ public class SaleServiceImpl implements SaleService {
         saleRepository.save(saleNew);
 
         List<Long> boxIds = resources.getBoxs();
-        for(Long boxId:boxIds){
-            SaleBox saleBox = new SaleBox();
-            saleBox.setSaleId(saleNew.getId());
-            saleBox.setBoxId(boxId);
-            saleBoxRepository.save(saleBox);
+        if(boxIds!=null && boxIds.size()>0){
+            for(Long boxId:boxIds){
+                SaleBox saleBox = new SaleBox();
+                saleBox.setSaleId(saleNew.getId());
+                saleBox.setBoxId(boxId);
+                saleBoxRepository.save(saleBox);
+            }
         }
 
+
         List<String> loopValues = resources.getLoopValue();
-        for(String loopValue:loopValues){
-            SaleLoop saleLoop = new SaleLoop();
-            saleLoop.setSaleId(saleNew.getId());
-            saleLoop.setLoopType(saleNew.getLoopType());
-            saleLoop.setLoopValue(loopValue);
-            saleLoopRepository.save(saleLoop);
+        if(loopValues!=null && loopValues.size()>0){
+            for(String loopValue:loopValues){
+                SaleLoop saleLoop = new SaleLoop();
+                saleLoop.setSaleId(saleNew.getId());
+                saleLoop.setLoopType(saleNew.getLoopType());
+                saleLoop.setLoopValue(loopValue);
+                saleLoopRepository.save(saleLoop);
+            }
         }
+
+        if(resources.getContent()!=null){
+            SaleContent saleContent = new SaleContent();
+            saleContent.setSaleId(saleNew.getId());
+            saleContent.setSaleContent(resources.getContent());
+            saleContentRepository.save(saleContent);
+        }
+
 
     }
 
@@ -146,8 +158,9 @@ public class SaleServiceImpl implements SaleService {
         }
         saleRepository.save(saleNew);
 
+        saleBoxRepository.deleteBySaleId(old.getId());
         if(resources.getBoxs()!=null){
-            saleBoxRepository.deleteBySaleId(old.getId());
+
             List<Long> boxIds = resources.getBoxs();
             for(Long boxId:boxIds){
                 SaleBox saleBox = new SaleBox();
@@ -156,9 +169,8 @@ public class SaleServiceImpl implements SaleService {
                 saleBoxRepository.save(saleBox);
             }
         }
-
+        saleLoopRepository.deleteBySaleId(old.getId());
         if(resources.getLoopValue()!=null){
-            saleLoopRepository.deleteBySaleId(old.getId());
             List<String> loopValues = resources.getLoopValue();
             for(String loopValue:loopValues){
                 SaleLoop saleLoop = new SaleLoop();
@@ -168,6 +180,16 @@ public class SaleServiceImpl implements SaleService {
                 saleLoopRepository.save(saleLoop);
             }
         }
+
+        saleContentRepository.deleteBySaleId(old.getId());
+        if(resources.getContent()!=null){
+            SaleContent saleContent = new SaleContent();
+            saleContent.setSaleId(saleNew.getId());
+            saleContent.setSaleContent(resources.getContent());
+            saleContentRepository.save(saleContent);
+        }
+
+
     }
 
     @Override
@@ -198,5 +220,14 @@ public class SaleServiceImpl implements SaleService {
             loopValues.add(map.get("loop_value").toString());
         }
         return loopValues;
+    }
+
+    @Override
+    public String getSaleContentBySaleId(Long saleId) {
+        List<Map<String,Object>> list = saleRepository.getSaleContentBySaleId(saleId);
+        if(list!=null && list.size()>0){
+            return list.get(0).get("sale_content").toString();
+        }
+        return null;
     }
 }

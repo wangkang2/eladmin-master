@@ -32,4 +32,6 @@ public interface SaleService {
     void update(SaleDto resources);
 
     void delete(Set<Long> ids);
+
+    String getSaleContentBySaleId(Long saleId);
 }

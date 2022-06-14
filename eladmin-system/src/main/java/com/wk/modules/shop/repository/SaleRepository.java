@@ -26,4 +26,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long>, JpaSpecificat
 
     @Query(value = "SELECT id,sale_id,loop_type,loop_value FROM shop_sale_loop WHERE sale_id = ?1",nativeQuery = true)
     List<Map<String, Object>> getLoopValueBySaleId(Long saleId);
+
+    @Query(value = "SELECT id,sale_id,sale_content FROM shop_sale_content WHERE sale_id = ?1",nativeQuery = true)
+    List<Map<String, Object>> getSaleContentBySaleId(Long saleId);
 }

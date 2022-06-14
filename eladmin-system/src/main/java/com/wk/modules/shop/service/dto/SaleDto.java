@@ -102,4 +102,6 @@ public class SaleDto extends BaseDTO implements Serializable {
 
     private Boolean enabled;
 
+    private String content;
+
 }
